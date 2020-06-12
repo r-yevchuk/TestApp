@@ -6,21 +6,41 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import {View, Text, StyleSheet, SafeAreaView, VirtualizedList} from 'react-native';
 
-const DATA = [];
-
-const getItem = (data, index) => {
-    return {
-        id: "id" + index,
-        key: "key" + index,
-        title: `Item ${index+1}`
+export default class App extends Component{
+    constructor() {
+        super();
+        this.DATA = []
     }
-}
 
-const getItemCount = (data) => {
-    return 50;
+    getItem(data, index){
+        return {
+            id: "id" + index,
+            key: "key" + index,
+            title: `Item ${index+1}`
+        }
+    }
+
+    getItemCount(data){
+        return 50;
+    }
+
+    render () {
+        return (
+            <SafeAreaView style={styles.container}>
+                <VirtualizedList
+                    data={this.DATA}
+                    initialNumToRender={4}
+                    renderItem={({ item }) => <Item title={item.title} />}
+                    keyExtractor={item => item.key}
+                    getItemCount={this.getItemCount}
+                    getItem={this.getItem}
+                />
+            </SafeAreaView>
+        );
+    }
 }
 
 const Item = ({ title })=> {
@@ -28,21 +48,6 @@ const Item = ({ title })=> {
         <View style={styles.item}>
             <Text style={styles.title}>{title}</Text>
         </View>
-    );
-}
-
-export default function App() {
-    return (
-        <SafeAreaView style={styles.container}>
-            <VirtualizedList
-                data={DATA}
-                initialNumToRender={4}
-                renderItem={({ item }) => <Item title={item.title} />}
-                keyExtractor={item => item.key}
-                getItemCount={getItemCount}
-                getItem={getItem}
-            />
-        </SafeAreaView>
     );
 }
 
