@@ -7,38 +7,59 @@
  */
 
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, VirtualizedList} from 'react-native';
 
-const App: () => React$Node = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-         <ScrollView style={styles.scrollView}>
-            <Text style={styles.text}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                  culpa qui officia deserunt mollit anim id est laborum.
-              </Text>
-          </ScrollView>
-      </SafeAreaView>
-  );
-};
+const DATA = [];
+
+const getItem = (data, index) => {
+    return {
+        id: "id" + index,
+        key: "key" + index,
+        title: `Item ${index+1}`
+    }
+}
+
+const getItemCount = (data) => {
+    return 50;
+}
+
+const Item = ({ title })=> {
+    return (
+        <View style={styles.item}>
+            <Text style={styles.title}>{title}</Text>
+        </View>
+    );
+}
+
+export default function App() {
+    return (
+        <SafeAreaView style={styles.container}>
+            <VirtualizedList
+                data={DATA}
+                initialNumToRender={4}
+                renderItem={({ item }) => <Item title={item.title} />}
+                keyExtractor={item => item.key}
+                getItemCount={getItemCount}
+                getItem={getItem}
+            />
+        </SafeAreaView>
+    );
+}
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-        marginTop: Constants.statusBarHeight,
     },
-    scrollView: {
-        backgroundColor: 'pink',
-        marginHorizontal: 20,
+    item: {
+        backgroundColor: '#f9c2ff',
+        height: 150,
+        justifyContent: 'center',
+        marginVertical: 4,
+        marginHorizontal: 8,
+        padding: 20,
     },
-    text: {
-        fontSize: 42,
+    title: {
+        fontSize: 32,
     },
 });
 
-export default App;
