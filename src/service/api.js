@@ -7,12 +7,11 @@ class Api {
 
     get(endpoint) {
         return fetch(this.getApiEndpoint(endpoint))
-            .then((response) => {
-                return { error: null, data: response.data, status: response.status};
-            })
-            .catch((error) => {
-                return { error: error.response };
-            });
+            .then(response =>  response.json()
+                .then(data => ({error: null, status: response.status, data: data})))
+        .catch((error) => {
+            return { error: error.response };
+        });
     }
 
     getApiEndpoint(endpoint) {
