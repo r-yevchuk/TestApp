@@ -1,7 +1,8 @@
 # TestApp
 
 ## Description
-* My First React Native app.
+My First React Native app.<br />
+This application displays the first ten images from the site https://unsplash.com/.
 
 ## How to run
 * Clone this project.
